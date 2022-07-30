@@ -5,7 +5,7 @@ import datetime
 
 now = datetime.datetime.now()
 
-established = '1920'
+established = 1920
 
 
 env = Environment(
@@ -16,8 +16,7 @@ env = Environment(
 template = env.get_template('template.html')
 
 rendered_page = template.render(
-    cap1_title="Красная кепка",
-    company_age=str(int(now.year) - int(established))
+    company_age=str(now.year - established)
 )
 
 with open('index.html', 'w', encoding="utf8") as file:
