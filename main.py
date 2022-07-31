@@ -1,7 +1,7 @@
 import datetime
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 from collections import defaultdict
-
+import os
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from pandas import read_excel
 
@@ -18,13 +18,13 @@ def year_notation_generator(year):
 
 
 def main():
-    established = 1920
+    year_of_foundation = int(os.environ['YEAR_OF_FOUNDATION'])
     now = datetime.datetime.now()
-    company_age = str(now.year - established)
+    company_age = str(now.year - year_of_foundation)
     year_notation = year_notation_generator(company_age)
     categorised_drinks = read_excel(
-        'wine3.xlsx',
-        sheet_name='Лист1',
+        io=os.environ['PATH_TO_XLSX_DB'],
+        sheet_name=os.environ['SHEET'],
         keep_default_na=False
     )
     drinks = categorised_drinks.to_dict(orient='record')
