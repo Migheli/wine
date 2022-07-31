@@ -7,10 +7,8 @@ from collections import defaultdict
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from pandas import read_excel
 
-now = datetime.datetime.now()
-
 established = 1920
-
+now = datetime.datetime.now()
 categorised_drinks = read_excel('wine2.xlsx', sheet_name='Лист1', keep_default_na=False)
 drinks = categorised_drinks.to_dict(orient='record')
 print(drinks)
