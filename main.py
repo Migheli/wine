@@ -5,8 +5,20 @@ import datetime
 
 now = datetime.datetime.now()
 
-established = 1920
+established = 1991
 
+def year_notation_generator(year):
+    last_char, pre_last_char = list(year)[-1], list(year)[-2]
+    year_notation = 'лет'
+    is_tens = pre_last_char == '1'
+    if last_char == '1' and not is_tens:
+        year_notation = 'год'
+    if last_char in ['2', '3', '4'] and not is_tens:
+        year_notation = 'года'
+    return year_notation
+
+company_age = str(now.year - established)
+year_notation = year_notation_generator(company_age)
 
 env = Environment(
     loader=FileSystemLoader('.'),
@@ -16,7 +28,8 @@ env = Environment(
 template = env.get_template('template.html')
 
 rendered_page = template.render(
-    company_age=str(now.year - established)
+    company_age=company_age,
+    year_notation=year_notation,
 )
 
 with open('index.html', 'w', encoding="utf8") as file:
