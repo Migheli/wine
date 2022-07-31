@@ -1,16 +1,30 @@
 import datetime
+from pprint import pprint
+
 from http.server import HTTPServer, SimpleHTTPRequestHandler
+from collections import defaultdict
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from pandas import read_excel
-
 
 now = datetime.datetime.now()
 
 established = 1991
 
-excel_data_df = read_excel('wine.xlsx', sheet_name='Лист1')
-wines = excel_data_df.to_dict(orient='record')
+categorised_wines = read_excel('wine2.xlsx', sheet_name='Лист1', keep_default_na=False)
+wines = categorised_wines.to_dict(orient='record')
+print(wines)
+
+new_wines_dict_of_lists = defaultdict(list)
+
+for wine in wines:
+    wine_category = wine['Категория']
+    new_wines_dict_of_lists[wine_category].append(wine)
+    wine.pop('Категория')
+
+pprint(new_wines_dict_of_lists)
+
+
 
 
 def year_notation_generator(year):
