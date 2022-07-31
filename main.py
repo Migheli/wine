@@ -1,11 +1,17 @@
+import datetime
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
-import datetime
+from pandas import read_excel
+
 
 now = datetime.datetime.now()
 
 established = 1991
+
+excel_data_df = read_excel('wine.xlsx', sheet_name='Лист1')
+wines = excel_data_df.to_dict(orient='record')
+
 
 def year_notation_generator(year):
     last_char, pre_last_char = list(year)[-1], list(year)[-2]
@@ -30,6 +36,7 @@ template = env.get_template('template.html')
 rendered_page = template.render(
     company_age=company_age,
     year_notation=year_notation,
+    wines=wines,
 )
 
 with open('index.html', 'w', encoding="utf8") as file:
