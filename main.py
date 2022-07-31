@@ -9,22 +9,20 @@ from pandas import read_excel
 
 now = datetime.datetime.now()
 
-established = 1991
+established = 1920
 
-categorised_wines = read_excel('wine2.xlsx', sheet_name='Лист1', keep_default_na=False)
-wines = categorised_wines.to_dict(orient='record')
-print(wines)
+categorised_drinks = read_excel('wine2.xlsx', sheet_name='Лист1', keep_default_na=False)
+drinks = categorised_drinks.to_dict(orient='record')
+print(drinks)
 
-new_wines_dict_of_lists = defaultdict(list)
+drinks_by_categories = defaultdict(list)
 
-for wine in wines:
-    wine_category = wine['Категория']
-    new_wines_dict_of_lists[wine_category].append(wine)
-    wine.pop('Категория')
+for drink in drinks:
+    drink_category = drink['Категория']
+    drinks_by_categories[drink_category].append(drink)
+    drink.pop('Категория')
 
-pprint(new_wines_dict_of_lists)
-
-
+pprint(drinks_by_categories)
 
 
 def year_notation_generator(year):
@@ -50,7 +48,7 @@ template = env.get_template('template.html')
 rendered_page = template.render(
     company_age=company_age,
     year_notation=year_notation,
-    wines=wines,
+    drinks_by_categories=drinks_by_categories
 )
 
 with open('index.html', 'w', encoding="utf8") as file:
