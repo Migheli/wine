@@ -18,13 +18,13 @@ def get_year_notation(year):
 
 
 def main():
-    foundation_year = int(os.environ['FOUNDATION_YEAR'])
+    foundation_year = int(os.getenv('FOUNDATION_YEAR'))
     now = datetime.datetime.now()
     company_age = str(now.year - foundation_year)
     year_notation = get_year_notation(company_age)
     categorised_drinks = read_excel(
-        io=os.environ['PATH_TO_XLSX_DB'],
-        sheet_name=os.environ['SHEET'],
+        io=os.getenv('PATH_TO_XLSX_DB'),
+        sheet_name=os.getenv('SHEET'),
         keep_default_na=False
     )
     drinks = categorised_drinks.to_dict(orient='record')
