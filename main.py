@@ -6,7 +6,7 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 from pandas import read_excel
 
 
-def year_notation_generator(year):
+def get_year_notation(year):
     last_char, pre_last_char = list(year)[-1], list(year)[-2]
     year_notation = 'лет'
     is_tens = pre_last_char == '1'
@@ -20,8 +20,8 @@ def year_notation_generator(year):
 def main():
     foundation_year = int(os.environ['FOUNDATION_YEAR'])
     now = datetime.datetime.now()
-    company_age = str(now.year - year_of_foundation)
-    year_notation = year_notation_generator(company_age)
+    company_age = str(now.year - foundation_year)
+    year_notation = get_year_notation(company_age)
     categorised_drinks = read_excel(
         io=os.environ['PATH_TO_XLSX_DB'],
         sheet_name=os.environ['SHEET'],
