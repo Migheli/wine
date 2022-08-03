@@ -18,7 +18,7 @@ def year_notation_generator(year):
 
 
 def main():
-    year_of_foundation = int(os.environ['YEAR_OF_FOUNDATION'])
+    foundation_year = int(os.environ['FOUNDATION_YEAR'])
     now = datetime.datetime.now()
     company_age = str(now.year - year_of_foundation)
     year_notation = year_notation_generator(company_age)
