@@ -4,7 +4,7 @@ from collections import defaultdict
 import os
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from pandas import read_excel
-
+from dotenv import load_dotenv
 
 def get_year_notation(year):
     last_char, pre_last_char = list(year)[-1], list(year)[-2]
@@ -18,6 +18,7 @@ def get_year_notation(year):
 
 
 def main():
+    load_dotenv()
     foundation_year = int(os.getenv('FOUNDATION_YEAR'))
     now = datetime.datetime.now()
     company_age = str(now.year - foundation_year)
